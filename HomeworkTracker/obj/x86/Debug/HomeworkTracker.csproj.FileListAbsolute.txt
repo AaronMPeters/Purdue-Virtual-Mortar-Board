@@ -1,0 +1,13 @@
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.Form1.resources
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.Properties.Resources.resources
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\bin\Debug\HomeworkTracker.exe
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\bin\Debug\HomeworkTracker.pdb
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.exe
+c:\users\aaron\documents\visual studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.pdb
+C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\bin\Debug\HomeworkTracker.exe.manifest
+C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\bin\Debug\HomeworkTracker.application
+C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.exe.manifest
+C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.application
