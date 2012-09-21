@@ -71,7 +71,7 @@ namespace HomeworkTracker
             newInformation.Location = new System.Drawing.Point(MY_X, myY);
             newInformation.Name = "textBox1"; 
             newInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            newInformation.Size = new System.Drawing.Size(300, 30);
+            newInformation.Size = new System.Drawing.Size(270, 30);
             newInformation.TabIndex = myNumber;
             gb.Controls.Add(newInformation);
 
@@ -91,6 +91,14 @@ namespace HomeworkTracker
 
             StreamReader sr = new StreamReader(filePath + myNumber + ".txt");
             myDate = Convert.ToDateTime(sr.ReadLine());
+            if (Convert.ToInt32(myDate.CompareTo(DateTime.Today)) < 0)
+            {
+                gb.BackColor = Color.LightGray;
+                gb.ForeColor = Color.Black;
+            }
+            else if (Convert.ToInt32(myDate.CompareTo(DateTime.Today)) == 0)
+                gb.BackColor = Color.DimGray;
+
             gb.Text = myDate.DayOfWeek.ToString() + "    (" + myDate.ToShortDateString() + ")";
 
             int i = 0;

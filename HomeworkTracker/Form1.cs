@@ -13,9 +13,9 @@ namespace HomeworkTracker
 {
     public partial class Form1 : Form
     {
-        private AssignmentDay friday;
         private Controller myControl;
-        private bool isNextWeek = false;
+        private bool lastFridayVisible = false;
+        private bool isHelping = false;
 
         public Form1()
         {
@@ -24,44 +24,38 @@ namespace HomeworkTracker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            myControl = new Controller(groupBox1);            
-        }
-
-        private void lastWeekToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!isNextWeek)
-            {
-                isNextWeek = true;
-                lastWeekToolStripMenuItem.Text = "Last Week";
-
-                myControl.reset();
-                myControl.goNext();
-            }
-            else
-            {
-                isNextWeek = false;
-                lastWeekToolStripMenuItem.Text = "Next Week";
-
-                myControl.reset();
-                myControl.go();
-            }
+            gbMain.Height = this.Height - gbMain.Location.Y;
+            gbMain.Width = this.Width - gbMain.Location.X;
+            myControl = new Controller(gbMain);
         }
 
         private void viewLastFidayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!gbLastFriday.Visible)
+            if (!lastFridayVisible)
             {
-                gbLastFriday.Visible = true;
+                lastFridayVisible = true;
                 viewLastFidayToolStripMenuItem.Text = "Hide Last Friday";
-                if (friday != null)
-                    friday.reset();
-                friday = new AssignmentDay(gbLastFriday, 10, 20);
-                friday.go();
+                myControl.lastFriday(false);
             }
             else
             {
-                gbLastFriday.Visible = false;
+                lastFridayVisible = false;
                 viewLastFidayToolStripMenuItem.Text = "View Last Friday";
+                myControl.lastFriday(true);
+            }
+        }
+
+        private void shoeHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (gbHelp.Visible == false)
+            {
+                gbHelp.Visible = true;
+                shoeHelpToolStripMenuItem.Text = "Hide Help";
+            }
+            else
+            {
+                shoeHelpToolStripMenuItem.Text = "Show Help";
+                gbHelp.Visible = false;
             }
         }
     }

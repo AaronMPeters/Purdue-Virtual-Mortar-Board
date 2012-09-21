@@ -10,9 +10,12 @@ namespace HomeworkTracker
     class Controller
     {
         private string filePath = "C:\\Users\\" + Environment.UserName + "\\Documents\\Data\\Homework\\";
+        private const int CHANGE_Y = 30;
 
         private List<AssignmentDay> days;
-        private GroupBox box;
+        private GroupBox parent, firstWeek, secondWeek, friday;
+        private AssignmentDay lstFriday;
+        private Controller toPass;
 
         public Controller(GroupBox b)
         {
@@ -36,7 +39,7 @@ namespace HomeworkTracker
                 sw2.Close();
             }
 
-            box = b;
+            parent = b;
             days = new List<AssignmentDay>();
             go();
         }
@@ -44,6 +47,22 @@ namespace HomeworkTracker
         public void go()
         {
             check();
+            buildFirstWeek();
+            buildSecondWeek();
+        }
+        
+        private void buildFirstWeek()
+        {
+            firstWeek = new GroupBox();
+            firstWeek.AutoSize = true;
+            firstWeek.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            firstWeek.BackColor = System.Drawing.Color.Black;
+            firstWeek.Location = new System.Drawing.Point(10, 10);
+            firstWeek.Name = "gbWeek1";
+            firstWeek.Size = new System.Drawing.Size(1810, 280);
+            parent.Controls.Add(firstWeek);
+
+            //firstWeek.SizeChanged += new EventHandler(changeSize);
 
             for (int i = 0; i < 5; i++)
             {
@@ -53,14 +72,23 @@ namespace HomeworkTracker
                 else
                     anX = 10 + days[i - 1].gb.Location.X + days[i - 1].gb.Width + 20;
 
-                AssignmentDay temp = new AssignmentDay(box, i, anX);
+                AssignmentDay temp = new AssignmentDay(firstWeek, i, anX);
                 temp.go();
                 days.Add(temp);
             }
         }
 
-        public void goNext()
+        private void buildSecondWeek()
         {
+            secondWeek = new GroupBox();
+            secondWeek.AutoSize = true;
+            secondWeek.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            secondWeek.BackColor = System.Drawing.Color.Black;
+            secondWeek.Location = new System.Drawing.Point(firstWeek.Location.X, firstWeek.Location.Y + firstWeek.Height + CHANGE_Y * 4);
+            secondWeek.Name = "gbWeek2";
+            secondWeek.Size = new System.Drawing.Size(1810, 280);
+            parent.Controls.Add(secondWeek);
+
             for (int i = 5; i < 10; i++)
             {
                 int anX = 0;
@@ -69,10 +97,17 @@ namespace HomeworkTracker
                 else
                     anX = 10 + days[i - 6].gb.Location.X + days[i - 6].gb.Width + 20;
 
-                AssignmentDay temp = new AssignmentDay(box, i, anX);
+                AssignmentDay temp = new AssignmentDay(secondWeek, i, anX);
+
+
                 temp.go();
                 days.Add(temp);
             }
+        }
+
+        private void changeSize(object sender, EventArgs e)
+        {
+            secondWeek.Location = secondWeek.Location = new System.Drawing.Point(firstWeek.Location.X, firstWeek.Location.Y + firstWeek.Height + CHANGE_Y);
         }
 
         private void check()
@@ -149,7 +184,7 @@ namespace HomeworkTracker
                 writer.Close();
                 start = start.AddDays(1);
             }
-            start.AddDays(3);
+            start = start.AddDays(2);
             for (int i = 5; i < 10; i++)
             {
                 StreamWriter writer = new StreamWriter(filePath + i + ".txt");
@@ -158,14 +193,39 @@ namespace HomeworkTracker
                 start = start.AddDays(1);
             }
         }
-        
+
+        public void lastFriday(bool hide)
+        {
+            if (!hide)
+            {
+                friday = new GroupBox();
+                friday.AutoSize = true;
+                friday.BackColor = System.Drawing.Color.DarkGoldenrod;
+                friday.ForeColor = System.Drawing.Color.White;
+                friday.Location = new System.Drawing.Point(secondWeek.Location.X, secondWeek.Location.Y + secondWeek.Height + CHANGE_Y);
+                friday.Name = "gbLastFriday";
+                friday.Size = new System.Drawing.Size(403, 140);
+                friday.Text = "Last";
+                parent.Controls.Add(friday);
+
+                lstFriday = new AssignmentDay(friday, 10, 20);
+                lstFriday.go();
+            }
+            else
+            {
+                lstFriday.reset();
+                friday.Visible = false;
+                parent.Controls.Remove(friday);
+            }
+        }
+
         public void reset()
         {
-            foreach (AssignmentDay item in days)
-            {
-                item.reset();
-            }
-            days = new List<AssignmentDay>();
+            secondWeek.Location = new System.Drawing.Point(firstWeek.Location.X, firstWeek.Location.Y + firstWeek.Height + CHANGE_Y);
+            firstWeek.Visible = false;
+            secondWeek.Visible = false;
+            parent.Controls.Remove(firstWeek);
+            parent.Controls.Remove(secondWeek);
         }
 
     }
