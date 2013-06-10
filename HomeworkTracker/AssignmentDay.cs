@@ -20,6 +20,7 @@ namespace HomeworkTracker
         private Button newInformationGo;
         public GroupBox gb, parent;
         private int myNumber, gbX;
+        private string myInfo;
 
         public AssignmentDay(GroupBox par, int num, int x)
         {
@@ -58,7 +59,11 @@ namespace HomeworkTracker
         private void buildBoxes()
         {
             gb = new GroupBox();
-            gb.Location = new Point(gbX, 30);
+            if (myNumber < 20)
+                gb.Location = new Point(gbX, 30);
+            else
+                gb.Location = new Point(gbX, 30 + CHANGE_Y);
+
             gb.Name = "groupBox1";
             gb.Size = new System.Drawing.Size(100, 100);
             gb.ForeColor = Color.White;
@@ -99,7 +104,13 @@ namespace HomeworkTracker
             else if (Convert.ToInt32(myDate.CompareTo(DateTime.Today)) == 0)
                 gb.BackColor = Color.DimGray;
 
-            gb.Text = myDate.DayOfWeek.ToString() + "    (" + myDate.ToShortDateString() + ")";
+
+            gb.Text = myDate.DayOfWeek.ToString();
+            if (myNumber < 20)   //Not a repeating day\
+                gb.Text += "    (" + myDate.ToShortDateString() + ")";
+            else
+                gb.Text += "s";
+
 
             int i = 0;
             while (!sr.EndOfStream)
@@ -117,7 +128,9 @@ namespace HomeworkTracker
                 if (sr.ReadLine().Equals("1"))
                     temp.ForeColor = Color.Red;
 
-                temp.Click += new EventHandler(DELETE_CLICK);
+                //temp.Click += new EventHandler(DELETE_CLICK);
+                temp.MouseClick += new MouseEventHandler(changeStatus_Click);
+                temp.MouseDoubleClick += new MouseEventHandler(movePriorityUp_DoubleClick);
 
                 gb.Controls.Add(temp);
                 labels.Add(temp);
@@ -145,46 +158,184 @@ namespace HomeworkTracker
             go();
         }
 
-        private void DELETE_CLICK(object sender, EventArgs e)
+        private void changeStatus_Click(object sender, MouseEventArgs e)
         {
             Label label = (Label)sender;
-            int num = Convert.ToInt32(label.Tag);
 
+            if (e.Button == MouseButtons.Left && e.Button == MouseButtons.Right)
+                MessageBox.Show("Congrats");
+            else if (e.Button == MouseButtons.Left)
+            {
+                int num = Convert.ToInt32(label.Tag);
 
-            List<string> info = new List<string>();
+                List<string> info = new List<string>();
+
+                StreamReader reader = new StreamReader(filePath + myNumber + ".txt");
+                string test = reader.ReadLine();
+                while (!test.Equals(label.Text))
+                {
+                    info.Add(test);
+                    test = reader.ReadLine();
+                }
+                //info.add(test);
+                reader.ReadLine(); //Reading the old 0 or 1
+
+                if (label.ForeColor == Color.White)
+                {
+                    DialogResult ans2 = DialogResult.Abort;
+
+                    if (myNumber >= 20)
+                    {
+                        ans2 = MessageBox.Show("By continuing, your new repeating assignments will not take effect until the next week. Is that what you are trying to do?", "Wait to Take Effect?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        
+                    }
+                    if (ans2 == DialogResult.Yes || myNumber < 20)
+                    {
+                        label.ForeColor = Color.Red;
+                        info.Add(test);
+                        info.Add("1");
+                    }
+                    else if (ans2 == DialogResult.No)
+                    {
+                        DialogResult ans = MessageBox.Show("Are you trying to delete this assignment?", "Delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (ans == DialogResult.No)
+                        {
+                            info.Add(test);
+                            info.Add("0");
+                        }
+                    }
+                }
+                else
+                {
+                    DialogResult ans = MessageBox.Show("Are you trying to delete this assignment?", "Delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (ans == DialogResult.No)
+                    {
+                        if (myNumber < 20)
+                        {
+                            info.Add(test);
+                            label.ForeColor = Color.White;
+                            info.Add("0");
+                        }
+                        else
+                        {
+                            info.Add(test);
+                            info.Add("1");
+                        }
+                    }
+                }
+
+                while (!reader.EndOfStream)
+                    info.Add(reader.ReadLine());
+
+                reader.Close();
+                StreamWriter write = new StreamWriter(filePath + myNumber + ".txt");
+                foreach (string item in info)
+                    write.WriteLine(item);
+                write.Close();
+
+                reset();
+                go();
+            }
+            else if (e.Button == MouseButtons.Right)
+                changeOrderDown(label.Text);
+        }
+
+        private void changeOrderDown(string text)
+        {
+            List<string> beforeInfo = new List<string>();
+            List<string> afterInfo = new List<string>();
 
             StreamReader reader = new StreamReader(filePath + myNumber + ".txt");
             string test = reader.ReadLine();
-            while (!test.Equals(label.Text))
+            while (!test.Equals(text))
             {
-                info.Add(test);
+                beforeInfo.Add(test);
                 test = reader.ReadLine();
             }
-            info.Add(test);
-            reader.ReadLine(); //Reading the old 0 or 1
+            afterInfo.Add(test);
+            afterInfo.Add(reader.ReadLine());
 
-            if (label.ForeColor == Color.White)
+            string tester = reader.ReadLine();
+            if (tester == null)
             {
-                label.ForeColor = Color.Red;
-                info.Add("1");
+                reader.Close();
+                MessageBox.Show("You cannot move this item any further down. It is already at the end of the list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
-            {
-                label.ForeColor = Color.White;
-                info.Add("0");
-            }
+            beforeInfo.Add(tester);
+            beforeInfo.Add(reader.ReadLine());
 
             while (!reader.EndOfStream)
-                info.Add(reader.ReadLine());
+                afterInfo.Add(reader.ReadLine());
 
             reader.Close();
+
             StreamWriter write = new StreamWriter(filePath + myNumber + ".txt");
-            foreach (string item in info)
+            foreach (string item in beforeInfo)
                 write.WriteLine(item);
+            foreach (string item in afterInfo)
+                write.WriteLine(item);
+
             write.Close();
 
             reset();
             go();
+        }
+
+        private void movePriorityUp_DoubleClick(object sender, MouseEventArgs e)
+        {
+            changeOrderUp(((Label)sender).Text);
+            changeOrderUp(((Label)sender).Text);
+        }
+
+        private void changeOrderUp(string text)
+        {
+            List<string> beforeInfo = new List<string>();
+            List<string> afterInfo = new List<string>();
+
+            StreamReader reader = new StreamReader(filePath + myNumber + ".txt");
+            string test = reader.ReadLine();
+            while (!test.Equals(text))
+            {
+                beforeInfo.Add(test);
+                test = reader.ReadLine();
+            }
+
+            if (beforeInfo.Count == 1)
+            {
+                reader.Close();
+                MessageBox.Show("You cannot move this item any further up. It is already at the top of the list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            afterInfo.Add(beforeInfo[beforeInfo.Count - 2]);
+            afterInfo.Add(beforeInfo[beforeInfo.Count - 1]);
+            beforeInfo[beforeInfo.Count - 2] = test;
+            beforeInfo[beforeInfo.Count - 1] = reader.ReadLine();
+
+            while (!reader.EndOfStream)
+                afterInfo.Add(reader.ReadLine());
+
+            reader.Close();
+
+            StreamWriter write = new StreamWriter(filePath + myNumber + ".txt");
+            foreach (string item in beforeInfo)
+                write.WriteLine(item);
+            foreach (string item in afterInfo)
+                write.WriteLine(item);
+
+            write.Close();
+
+            reset();
+            go();
+        }
+
+        private void select_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Up)
+                changeOrderUp(myInfo);
+            else if (e.KeyData == Keys.Down)
+                changeOrderDown(myInfo);
         }
     }
 }

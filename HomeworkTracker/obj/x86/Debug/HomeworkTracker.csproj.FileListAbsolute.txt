@@ -11,3 +11,16 @@ C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTra
 C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\bin\Debug\HomeworkTracker.application
 C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.exe.manifest
 C:\Users\Aaron\Documents\Visual Studio 2010\Projects\HomeworkTracker\HomeworkTracker\obj\x86\Debug\HomeworkTracker.application
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\HomeworkTracker.exe
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\HomeworkTracker.pdb
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\bin\Debug\HomeworkTracker.exe.manifest
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\bin\Debug\HomeworkTracker.application
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\bin\Debug\HomeworkTracker.exe
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\bin\Debug\HomeworkTracker.pdb
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\HomeworkTracker.Form1.resources
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\HomeworkTracker.Properties.Resources.resources
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\HomeworkTracker.exe.manifest
+C:\Users\Aaron\Documents\GitHub\Purdue-Virtual-Mortar-Board\HomeworkTracker\obj\x86\Debug\HomeworkTracker.application

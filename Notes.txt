@@ -1,0 +1,7 @@
+-Warning when adding assignments to previous days
+
+-Bugs to fix:
+	- It starts out as 'view last friday' on the weekend even though last friday is already visible.
+Also, if you click on 'view last friday' and then 'hide last friday' and then 'view repeating assignments', it puts the repeating assignments behind the last friday group box because
+the program thinks last friday is not visible since that's what the user just clicked
+	- It says 'Delete Assignment' somewhere
